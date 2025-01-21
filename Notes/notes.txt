@@ -1,0 +1,48 @@
+### **Notes réorganisées sur CORBA**  
+
+1. **IDL et les types de données**  
+   - L'IDL (Interface Definition Language) ne supporte pas des types comme `ArrayList`.  
+   - Pour représenter des tableaux ou des collections de structures, on utilise :  
+     **`sequence`**.
+
+2. **Génération des fichiers (stubs et skeletons)**  
+   - Utilisez la commande suivante pour générer les fichiers nécessaires :  
+     ```
+     C:\A_CL_SE\TPCorbaServer\src>idlj -fall -v Banque.idl
+     ```  
+     - **`-fall`** : Génère les **stubs** (pour le client) et les **skeletons** (pour le serveur).  
+     - **`-v`** : Affiche des messages détaillés pendant la génération.
+
+3. **Classes générées**  
+   - Les fichiers générés incluent deux éléments principaux :
+     - **`IBanqueRemotePOA`** :  
+       Skeleton généré automatiquement, basé sur le **Portable Object Adapter (POA)**.  
+       → Les classes serveur doivent hériter de ce skeleton pour implémenter les méthodes définies.
+     - **`IBanqueRemoteOperations`** :  
+       Interface qui contient uniquement les signatures des méthodes définies dans l'IDL.
+
+4. **Création d’un objet distant**  
+   - Pour créer un objet distant, il faut :  
+     - Créer une classe qui **hérite du skeleton** (par exemple : `IBanqueRemotePOA`).  
+     - Implémenter les méthodes déclarées dans l'IDL.
+
+5. **Initialisation du POA (Portable Object Adapter)**  
+   - Un **POA manager** est nécessaire pour gérer les objets distants.  
+   - Le **RootPOA** (POA racine) est créé automatiquement lors de l'initialisation du serveur.  
+
+---
+C:\A_CL_SE\TPCorbaServer\bin>start tnameserv
+
+C:\A_CL_SE\TPCorbaServer\bin>java ServeurCORBA
+
+Il y a pas arrayList etc en idl
+sequence pour tableau de structure
+-fall pour generer stub et skeleton 
+-v afficher message
+
+IBanqueRemotePOA skeleton (Portable Object Adapter)
+IBanqueRemoteOperation interface qui contient nos signature
+
+Pour creer un objet distant, il faut creer des classes qui heritent du skeleton
+
+Au niveau de l'initialisation; il y a un POA manager qui est créé (RootPOA) 
